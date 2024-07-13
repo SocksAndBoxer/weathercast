@@ -1,15 +1,16 @@
+import { useState } from 'react'
+import { TCity } from '../types'
+
 const url = 'https://geocoding-api.open-meteo.com/v1/search?name='
 
-import { useState } from 'react'
-import { City } from '../types'
-
 export const useGeolocation = (city: string) => {
-  const [cities, setCities] = useState<City[]>([])
+  const [cities, setCities] = useState<TCity[]>([])
   const [isPending, setIsPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const fetchCitiesData = async () => {
     setIsPending(true)
+
     try {
       const response = await fetch(url + city)
 
@@ -20,6 +21,12 @@ export const useGeolocation = (city: string) => {
       const json = await response.json()
 
       setIsPending(false)
+
+      if (!json.results) {
+        setError('No results')
+        return setCities([])
+      }
+
       setCities(json.results)
       setError(null)
     } catch (error) {

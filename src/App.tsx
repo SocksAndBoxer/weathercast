@@ -1,29 +1,27 @@
 import { SetStateAction, useState } from 'react'
 import './App.css'
 import { useGeolocation } from './hooks/useGeolocation'
-import { City } from './types'
+import { TCity } from './types'
 import Cities from './components/Cities'
 
 function App() {
   const [city, setCity] = useState('')
-  const [selectedCity, setSelectedCity] = useState<City>()
+  const [selectedCity, setSelectedCity] = useState<TCity | null>(null)
   const { cities, isPending, error, fetchCitiesData } = useGeolocation(city)
-
-  // console.log(cities, isPending, error)
 
   const handleInputChange = (e: {
     target: { value: SetStateAction<string> }
   }) => {
+    setSelectedCity(null)
     setCity(e.target.value)
   }
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault()
     fetchCitiesData()
-    // fetchData()
   }
 
-  const handleCitySelection = (city: City) => {
+  const handleCitySelection = (city: TCity) => {
     setSelectedCity(city)
     setCity(city.name)
   }
@@ -40,12 +38,13 @@ function App() {
         />
         <button type='submit'>Get Weather</button>
       </form>
-      {cities && (
-        <>
-          {!error && !isPending && cities && (
-            <Cities handleCitySelection={handleCitySelection} cities={cities} />
-          )}
-        </>
+      {cities && !selectedCity && (
+        <Cities
+          handleCitySelection={handleCitySelection}
+          isPending={isPending}
+          error={error}
+          cities={cities}
+        />
       )}
     </div>
   )
