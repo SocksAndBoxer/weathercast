@@ -1,12 +1,20 @@
 const directions = [
-  'north',
-  'northeast',
-  'east',
-  'southeast',
-  'south',
-  'southwest',
-  'west',
-  'northwest',
+  'N',
+  'NNE',
+  'NE',
+  'ENE',
+  'E',
+  'ESE',
+  'SE',
+  'SSE',
+  'S',
+  'SSW',
+  'SW',
+  'WSW',
+  'W',
+  'WNW',
+  'NW',
+  'NNW',
 ] as const
 
 export const degreesToDirection = (degrees: number) => {
@@ -14,7 +22,7 @@ export const degreesToDirection = (degrees: number) => {
   let convertedDegrees = Math.floor(degrees / 22.5 + 0.5)
 
   // Ensure it's within 0-7
-  console.log(convertedDegrees)
+  console.log('dire', convertedDegrees, directions[convertedDegrees % 16])
 
   return directions[convertedDegrees % 16]
 }
