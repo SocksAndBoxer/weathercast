@@ -13,7 +13,7 @@ const Cities = ({
   error,
   isPending,
 }: CitiesProps) => {
-  if (error) {
+  if (error || cities.length === 0) {
     return <p>{error}</p>
   }
 
@@ -23,12 +23,18 @@ const Cities = ({
         <p>Loading...</p>
       ) : (
         <>
-          <h2>Select your city</h2>
-          {cities.map(city => (
-            <div onClick={() => handleCitySelection(city)} key={city.id}>
-              {city.name} - {city.admin1} {city.admin2}
-            </div>
-          ))}
+          <h2 className='font-bold text-lg mb-4'>Select your city</h2>
+          <ul>
+            {cities.map(city => (
+              <li
+                className='cursor-pointer mb-2'
+                onClick={() => handleCitySelection(city)}
+                key={city.id}
+              >
+                {city.name} - {city.admin1} {city.admin2}
+              </li>
+            ))}
+          </ul>
         </>
       )}
     </section>

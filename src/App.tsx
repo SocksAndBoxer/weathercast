@@ -1,7 +1,7 @@
 import { SetStateAction, useState } from 'react'
 import './App.css'
 import { useGeolocation } from './hooks/useGeolocation'
-import { TCity } from './types'
+import { TCity, THourly } from './types'
 import Cities from './components/Cities'
 import { useWeathercast } from './hooks/useWeathercast'
 import DailyForecast from './components/DailyForecast'
@@ -12,6 +12,8 @@ function App() {
     'celsius'
   )
   const [selectedCity, setSelectedCity] = useState<TCity | null>(null)
+  const [hourlyInfos, setHourlyInfos] = useState<THourly[] | null>(null)
+  const [toggleSearch, setToggleSearch] = useState(false)
   const { cities, isPending, error, fetchCitiesData } = useGeolocation(city)
   const { forecast, isPending: isWeathercastPending } = useWeathercast(
     selectedCity,
@@ -22,55 +24,86 @@ function App() {
     target: { value: SetStateAction<string> }
   }) => {
     setSelectedCity(null)
+    setToggleSearch(false)
     setCity(e.target.value)
   }
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault()
+    setToggleSearch(true)
     fetchCitiesData()
   }
 
   const handleCitySelection = (city: TCity) => {
     setSelectedCity(city)
+    setToggleSearch(false)
     setCity(city.name)
+  }
+
+  const handleHourlyForecast = (hourly: THourly[]) => {
+    setHourlyInfos(hourly)
   }
 
   return (
     <div>
-      <h1>Weather Forecast in your city</h1>
-      <button
-        onClick={() =>
-          setToggledTemp((oldTemp: string) =>
-            oldTemp === 'celsius' ? 'fahrenheit' : 'celsius'
-          )
-        }
+      <h1 className='mb-3'>Weather Forecast in your city</h1>
+      <form
+        className='relative flex flex-row justify-center gap-4 mb-8'
+        onSubmit={handleSubmit}
       >
-        Temperature : {toggledTemp}
-      </button>
-      <form onSubmit={handleSubmit}>
         <input
+          className='shadow appearance-none border rounded py-2 px-3 leading-tight focus:outline-none focus:shadow-outline" id="username'
           type='text'
           placeholder='Enter city name'
           value={city}
           onChange={handleInputChange}
         />
+        {toggleSearch && (
+          <div className='absolute bg-gray-700 px-8 py-4 rounded top-14 left-8'>
+            <Cities
+              handleCitySelection={handleCitySelection}
+              isPending={isPending}
+              error={error}
+              cities={cities}
+            />
+          </div>
+        )}
         <button type='submit'>Get Weather</button>
+        <button
+          onClick={() =>
+            setToggledTemp((oldTemp: string) =>
+              oldTemp === 'celsius' ? 'fahrenheit' : 'celsius'
+            )
+          }
+        >
+          Temperature : {toggledTemp}
+        </button>
       </form>
-      {cities && !selectedCity && (
-        <Cities
-          handleCitySelection={handleCitySelection}
-          isPending={isPending}
-          error={error}
-          cities={cities}
-        />
-      )}
-      {forecast && !isWeathercastPending && (
-        <section>
-          {forecast.map(day => (
-            <DailyForecast day={day} />
-          ))}
-        </section>
-      )}
+      <section className='flex flex-col gap-8'>
+        {forecast && !isWeathercastPending && (
+          <>
+            <h2 className='text-xl'>{selectedCity?.name}</h2>
+            <section className='flex gap-2'>
+              {forecast.map(day => (
+                <DailyForecast
+                  day={day}
+                  handleHourlyForecast={handleHourlyForecast}
+                />
+              ))}
+            </section>
+          </>
+        )}
+        {hourlyInfos && (
+          <section className='flex flex-wrap justify-center gap-2'>
+            {hourlyInfos.map(hours => (
+              <div>
+                <p>{hours.hour.getHours()}h</p>
+                <p>{Math.round(hours.temperature)}°</p>
+              </div>
+            ))}
+          </section>
+        )}
+      </section>
     </div>
   )
 }
