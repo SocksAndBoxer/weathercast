@@ -1,10 +1,10 @@
 import { SetStateAction, useState } from 'react'
 import './App.css'
 import { useGeolocation } from './hooks/useGeolocation'
-import { TCity, THourly } from './types'
+import { TCity } from './types'
 import Cities from './components/Cities'
 import { useWeathercast } from './hooks/useWeathercast'
-import { degreesToDirection } from './utils/degrees-to-direction'
+import DailyForecast from './components/DailyForecast'
 
 function App() {
   const [city, setCity] = useState('')
@@ -33,10 +33,6 @@ function App() {
   const handleCitySelection = (city: TCity) => {
     setSelectedCity(city)
     setCity(city.name)
-  }
-
-  const handleHourlyForecast = (hourly: THourly[]) => {
-    console.log(hourly)
   }
 
   return (
@@ -71,13 +67,7 @@ function App() {
       {forecast && !isWeathercastPending && (
         <section>
           {forecast.map(day => (
-            <div onClick={() => handleHourlyForecast(day.hourly)}>
-              <h3>{day.date!.toLocaleDateString('en', { weekday: 'long' })}</h3>
-              <p>
-                {Math.round(day.minTemp)}° - {Math.round(day.maxTemp)}°
-              </p>
-              <p>Wind direction: {degreesToDirection(day.windDirection)}</p>
-            </div>
+            <DailyForecast day={day} />
           ))}
         </section>
       )}
