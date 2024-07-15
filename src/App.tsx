@@ -1,4 +1,4 @@
-import { SetStateAction, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 import './App.css'
 import { useGeolocation } from './hooks/useGeolocation'
 import { TCity, THourly } from './types'
@@ -20,10 +20,13 @@ function App() {
     toggledTemp
   )
 
+  useEffect(() => {
+    forecast && setHourlyInfos(forecast[0].hourly)
+  }, [forecast])
+
   const handleInputChange = (e: {
     target: { value: SetStateAction<string> }
   }) => {
-    setSelectedCity(null)
     setToggleSearch(false)
     setCity(e.target.value)
   }
@@ -67,7 +70,7 @@ function App() {
           onChange={handleInputChange}
         />
         {toggleSearch && (
-          <div className='absolute bg-gray-700 px-8 py-4 rounded top-14 left-8'>
+          <div className='absolute bg-gray-700 px-8 py-4 rounded top-14 left-[175px]'>
             <Cities
               handleCitySelection={handleCitySelection}
               isPending={isPending}
@@ -77,7 +80,9 @@ function App() {
           </div>
         )}
         <button type='submit'>Get Weather</button>
-        <button onClick={handleTempButton}>Temperature : {toggledTemp}</button>
+        <button className='min-w-[230px]' onClick={handleTempButton}>
+          Temperature : {toggledTemp}
+        </button>
       </form>
       <section className='flex flex-col gap-8'>
         {forecast && !isWeathercastPending && (
