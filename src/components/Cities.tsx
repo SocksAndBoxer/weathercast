@@ -16,6 +16,7 @@ const Cities = ({
   if (error) {
     return <p>{error}</p>
   }
+
   return (
     <section>
       {isPending ? (

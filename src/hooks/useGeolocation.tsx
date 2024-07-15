@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { TCity } from '../types'
 
-const url = 'https://geocoding-api.open-meteo.com/v1/search?name='
+const url = 'https://geocoding-api.open-meteo.com/v1/'
 
 export const useGeolocation = (city: string) => {
   const [cities, setCities] = useState<TCity[]>([])
@@ -12,8 +12,8 @@ export const useGeolocation = (city: string) => {
     setIsPending(true)
 
     try {
-      const response = await fetch(url + city)
-
+      const response = await fetch(url + 'search?name=' + city)
+      ;('')
       if (!response.ok) {
         throw new Error(response.statusText)
       }

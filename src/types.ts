@@ -11,3 +11,13 @@ export type TCity = {
   admin2: string
   admin3: string
 }
+
+export type THourly = { hour: Date; temperature: number }
+
+export type TForecast = {
+  date: Date | null
+  maxTemp: number
+  minTemp: number
+  windDirection: number
+  hourly: THourly[]
+}
