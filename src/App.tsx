@@ -5,6 +5,7 @@ import { TCity, THourly } from './types'
 import Cities from './components/Cities'
 import { useWeathercast } from './hooks/useWeathercast'
 import DailyForecast from './components/DailyForecast'
+import HourlyForecast from './components/HourlyForecast'
 
 function App() {
   const [city, setCity] = useState('')
@@ -101,10 +102,7 @@ function App() {
         {hourlyInfos && (
           <section className='flex flex-wrap justify-center gap-2'>
             {hourlyInfos.map(hours => (
-              <div>
-                <p>{hours.hour.getHours()}h</p>
-                <p>{Math.round(hours.temperature)}°</p>
-              </div>
+              <HourlyForecast hours={hours} />
             ))}
           </section>
         )}
