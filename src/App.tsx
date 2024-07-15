@@ -6,6 +6,7 @@ import Cities from './components/Cities'
 import { useWeathercast } from './hooks/useWeathercast'
 import DailyForecast from './components/DailyForecast'
 import HourlyForecast from './components/HourlyForecast'
+import { useOutsideClick } from './hooks/useOutsideClick'
 
 function App() {
   const [city, setCity] = useState('')
@@ -15,6 +16,9 @@ function App() {
   const [selectedCity, setSelectedCity] = useState<TCity | null>(null)
   const [hourlyInfos, setHourlyInfos] = useState<THourly[] | null>(null)
   const [toggleSearch, setToggleSearch] = useState(false)
+  const ref = useOutsideClick(() => {
+    setToggleSearch(false)
+  })
   const { cities, isPending, error, fetchCitiesData } = useGeolocation(city)
   const { forecast, isPending: isWeathercastPending } = useWeathercast(
     selectedCity,
@@ -57,7 +61,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className='min-w-[1200px]'>
       <h1 className='mb-3'>Weather Forecast in your city</h1>
       <form
         className='relative flex flex-row justify-center gap-4 mb-8'
@@ -71,7 +75,10 @@ function App() {
           onChange={handleInputChange}
         />
         {toggleSearch && (
-          <div className='absolute bg-gray-700 px-8 py-4 rounded top-14 left-[175px]'>
+          <div
+            ref={ref}
+            className='absolute bg-gray-700 px-8 py-4 rounded top-14 left-[280px]'
+          >
             <Cities
               handleCitySelection={handleCitySelection}
               isPending={isPending}
