@@ -44,6 +44,14 @@ function App() {
     setHourlyInfos(hourly)
   }
 
+  const handleTempButton = (e: { preventDefault: () => void }) => {
+    e.preventDefault()
+    setToggledTemp((oldTemp: string) =>
+      oldTemp === 'celsius' ? 'fahrenheit' : 'celsius'
+    )
+    setToggleSearch(false)
+  }
+
   return (
     <div>
       <h1 className='mb-3'>Weather Forecast in your city</h1>
@@ -69,15 +77,7 @@ function App() {
           </div>
         )}
         <button type='submit'>Get Weather</button>
-        <button
-          onClick={() =>
-            setToggledTemp((oldTemp: string) =>
-              oldTemp === 'celsius' ? 'fahrenheit' : 'celsius'
-            )
-          }
-        >
-          Temperature : {toggledTemp}
-        </button>
+        <button onClick={handleTempButton}>Temperature : {toggledTemp}</button>
       </form>
       <section className='flex flex-col gap-8'>
         {forecast && !isWeathercastPending && (
