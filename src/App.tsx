@@ -96,7 +96,7 @@ function App() {
         {forecast && !isWeathercastPending && (
           <>
             <h2 className='text-xl'>{selectedCity?.name}</h2>
-            <section className='flex gap-2'>
+            <section className='flex flex-wrap justify-center gap-2'>
               {forecast.map(day => (
                 <DailyForecast
                   day={day}
