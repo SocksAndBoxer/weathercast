@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  openmeteo:
+    specifier: ^1.1.4
+    version: 1.1.4
   react:
     specifier: ^18.3.1
     version: 18.3.1
@@ -594,6 +597,13 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
     dev: true
+
+  /@openmeteo/sdk@1.11.11:
+    resolution: {integrity: sha512-YaQVKw9aJeniY8yG/IB6q5V/ZGOwTZ13WMSxAO/PO37cZCEYP1scXF9mHp0uOWWB4KLSiJRlJN3+Q3eMOSzxQQ==}
+    engines: {node: '>=12.0'}
+    dependencies:
+      flatbuffers: 24.3.25
+    dev: false
 
   /@rollup/rollup-android-arm-eabi@4.18.1:
     resolution: {integrity: sha512-lncuC4aHicncmbORnx+dUaAgzee9cm/PbIqgWz1PpXuwc+sa1Ct83tnqUDy/GFKleLiN7ZIeytM6KJ4cAn1SxA==}
@@ -1324,6 +1334,10 @@ packages:
       rimraf: 3.0.2
     dev: true
 
+  /flatbuffers@24.3.25:
+    resolution: {integrity: sha512-3HDgPbgiwWMI9zVB7VYBHaMrbOO7Gm0v+yD2FV/sCKj+9NDeVL7BOBYUuhWAQGKWOzBo8S9WdMvV0eixO233XQ==}
+    dev: false
+
   /flatted@3.3.1:
     resolution: {integrity: sha512-X8cqMLLie7KsNUDSdzeN8FYK9rEt4Dt67OsG/DNGnYTSDBG4uFAJFBnUeiV+zCVAvwFy56IjM9sH51jVaEhNxw==}
     dev: true
@@ -1586,6 +1600,14 @@ packages:
     dependencies:
       wrappy: 1.0.2
     dev: true
+
+  /openmeteo@1.1.4:
+    resolution: {integrity: sha512-TalTDl0M7JJoeRTf+rWiFZ9SLvoxm7KkFLOQqcSjCiYs+bVMhax1qtryJqeZ1RF4W4Xfsgcl9x+VC1z39ULCxA==}
+    engines: {node: '>=12.0'}
+    dependencies:
+      '@openmeteo/sdk': 1.11.11
+      flatbuffers: 24.3.25
+    dev: false
 
   /optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
