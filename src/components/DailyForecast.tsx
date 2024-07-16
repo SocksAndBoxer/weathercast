@@ -14,7 +14,9 @@ const DailyForecast = ({
 }: DailyForecastProps) => {
   return (
     <div
-      className={`cursor-pointer ${selected ? 'font-bold' : ''}`}
+      className={`cursor-pointer border-2 rounded-md p-4 ${
+        selected ? '[text-shadow:_0_1px_0_rgb(0_0_0_/_80%)]' : ''
+      }`}
       onClick={() => handleHourlyForecast(day.hourly)}
     >
       <h3>{day.date!.toLocaleDateString('en', { weekday: 'long' })}</h3>

@@ -104,7 +104,7 @@ function App() {
         {forecast && !isWeathercastPending && (
           <>
             <h2 className='text-xl'>{selectedCity?.name}</h2>
-            <section className='flex flex-wrap justify-center gap-2'>
+            <section className='flex justify-center gap-6'>
               {forecast.map(day => (
                 <DailyForecast
                   selected={day.hourly === hourlyInfos}
@@ -117,7 +117,7 @@ function App() {
           </>
         )}
         {hourlyInfos && (
-          <section className='flex flex-wrap justify-center gap-2'>
+          <section className='flex flex-wrap justify-center gap-4'>
             {hourlyInfos.map(hours => (
               <HourlyForecast key={hours.hour.getHours()} hours={hours} />
             ))}
