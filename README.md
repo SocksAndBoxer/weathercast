@@ -13,3 +13,6 @@ And run it:
 pnpm run dev
 
 I used vitejs to launch the project quickly; with React and TS and I added Tailwind to improve the CSS a bit.
+
+Issue: sunset and sunrise are null; the doc says this thing that I tried unsuccessfully.
+_Caveats: The code generator does not handle sunrise and sunset correctly. It is supposed to be ".valuesInt64" instead of ".values". For the ensemble API, multiple members per variable are not correctly decoded. You will have to loop over `variables`._

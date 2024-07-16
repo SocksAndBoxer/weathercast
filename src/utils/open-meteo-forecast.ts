@@ -40,7 +40,6 @@ export const weatherData = async (params: any) => {
       windDirection10mDominant: daily.variables(4)!.valuesArray()!,
     },
   }
-
   console.log(weatherData)
 
   let dailyWeather: TForecast[] = []
