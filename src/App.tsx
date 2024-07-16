@@ -62,7 +62,7 @@ function App() {
 
   return (
     <div className='min-w-[1200px]'>
-      <h1 className='mb-3'>Weather Forecast in your city</h1>
+      <h1 className='mb-6 text-4xl'>Weather Forecast in your city</h1>
       <form
         className='relative flex flex-row justify-center gap-4 mb-8'
         onSubmit={handleSubmit}
@@ -77,7 +77,7 @@ function App() {
         {toggleSearch && (
           <div
             ref={ref}
-            className='absolute bg-gray-700 px-8 py-4 rounded top-14 left-[280px]'
+            className='absolute bg-gray-700 px-8 py-4 rounded top-14 left-[280px] text-white'
           >
             <Cities
               handleCitySelection={handleCitySelection}
@@ -87,8 +87,16 @@ function App() {
             />
           </div>
         )}
-        <button type='submit'>Get Weather</button>
-        <button className='min-w-[230px]' onClick={handleTempButton}>
+        <button
+          className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
+          type='submit'
+        >
+          Get Weather
+        </button>
+        <button
+          className='min-w-[230px] bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded'
+          onClick={handleTempButton}
+        >
           Temperature : {toggledTemp}
         </button>
       </form>
@@ -99,7 +107,9 @@ function App() {
             <section className='flex flex-wrap justify-center gap-2'>
               {forecast.map(day => (
                 <DailyForecast
+                  selected={day.hourly === hourlyInfos}
                   day={day}
+                  key={day.date?.getDay()}
                   handleHourlyForecast={handleHourlyForecast}
                 />
               ))}
@@ -109,7 +119,7 @@ function App() {
         {hourlyInfos && (
           <section className='flex flex-wrap justify-center gap-2'>
             {hourlyInfos.map(hours => (
-              <HourlyForecast hours={hours} />
+              <HourlyForecast key={hours.hour.getHours()} hours={hours} />
             ))}
           </section>
         )}
